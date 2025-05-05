@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Language Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #58cc02;
@@ -261,6 +262,40 @@
             justify-content: center;
             font-size: 20px;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 16px;
+            padding: 24px;
+            width: 60%;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .language-details {
+            padding: 16px;
+        }
         
         .cta {
             background-color: var(--primary-color);
@@ -357,7 +392,47 @@
             align-items: center;
             justify-content: center;
         }
-        
+        .region {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .region:hover {
+      transform: scale(1.1);
+    }
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 700px;
+      width: 100%;
+      overflow-y: auto;
+    }
+    .close {
+      color: gray;
+      cursor: pointer;
+    }
         @media (max-width: 768px) {
             .hero {
                 flex-direction: column-reverse;
@@ -422,7 +497,7 @@
             </div>
             
             <div class="hero-image">
-                <img src="\images\ded26f174e26ad19d0a35cad7747c28c.png" alt="Language Learning Mascot" class="mascot-image" />
+                <img src="\ded26f174e26ad19d0a35cad7747c28c.png" alt="Language Learning Mascot" class="mascot-image" />
             </div>
         </section>
         
@@ -451,111 +526,264 @@
                 </div>
             </div>
         </section>
-        
+       
         <section class="languages">
-            <h2>Choose from 40+ languages</h2>
+            <h2>Choose your language region</h2>
             
             <div class="language-grid">
-                <div class="language-card">
-                    <div class="language-flag">SP</div>
-                    <div class="language-name">Spanish</div>
+                <div class="language-card" onclick="openRegion('Europe')">
+                    <div class="language-flag">EU</div>
+                    <div class="language-name">Europe</div>
                 </div>
                 
-                <div class="language-card">
-                    <div class="language-flag">FR</div>
-                    <div class="language-name">French</div>
+                <div class="language-card" onclick="openRegion('Asia')">
+                    <div class="language-flag">AS</div>
+                    <div class="language-name">Asia</div>
                 </div>
                 
-                <div class="language-card">
-                    <div class="language-flag">JP</div>
-                    <div class="language-name">Japanese</div>
+                <div class="language-card" onclick="openRegion('Africa')">
+                    <div class="language-flag">AF</div>
+                    <div class="language-name">Africa</div>
                 </div>
                 
-                <div class="language-card">
-                    <div class="language-flag">IT</div>
-                    <div class="language-name">Italian</div>
-                </div>
-                
-                <div class="language-card">
-                    <div class="language-flag">DE</div>
-                    <div class="language-name">German</div>
-                </div>
-                
-                <div class="language-card">
-                    <div class="language-flag">KR</div>
-                    <div class="language-name">Korean</div>
-                </div>
-                
-                <div class="language-card">
-                    <div class="language-flag">CN</div>
-                    <div class="language-name">Chinese</div>
-                </div>
-                
-                <div class="language-card">
-                    <div class="language-flag">AR</div>
-                    <div class="language-name">Arabic</div>
+                <div class="language-card" onclick="openRegion('Americas')">
+                    <div class="language-flag">AM</div>
+                    <div class="language-name">Americas</div>
                 </div>
             </div>
         </section>
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Explore Languages Around the World</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              Discover and learn languages from different regions. Click on a region to see popular languages spoken there.
+            </p>
         
-        <section class="cta">
-            <h2>Ready to start your language journey?</h2>
-            <p>Join millions of learners worldwide who are already improving their language skills with Duolingo.</p>
-            <button class="cta-btn">Create Free Account</button>
-        </section>
+            <div class="relative w-full h-96 bg-blue-100 rounded-xl overflow-hidden mb-8">
+              <!-- World Map Background -->
+              <div class="absolute inset-0 bg-blue-200">
+                <svg viewBox="0 0 1000 500" class="w-full h-full opacity-40">
+                  <path d="M250,100 Q400,50 550,100 T850,100" fill="none" stroke="#1CB0F6" stroke-width="3" />
+                  <path d="M150,200 Q300,150 450,200 T750,200" fill="none" stroke="#1CB0F6" stroke-width="3" />
+                  <path d="M200,300 Q350,250 500,300 T800,300" fill="none" stroke="#1CB0F6" stroke-width="3" />
+                  <path d="M300,400 Q450,350 600,400 T900,400" fill="none" stroke="#1CB0F6" stroke-width="3" />
+                </svg>
+              </div>
+        
+              <!-- Region Hotspots -->
+              <div id="regions"></div>
+        
+              <!-- Decorative Elements -->
+              <div class="absolute bottom-4 right-4 text-6xl">🌍</div>
+            </div>
+        
+            <div class="text-center text-gray-600 italic">
+              Click on a region to discover languages you can learn!
+            </div>
+          </div>
+        
+        <!-- Modal for showing language region details -->
+        <div id="languageModal" class="modal">
+            <div class="modal-content">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-gray-800" id="modalTitle">Languages in Region</h3>
+                <span id="closeModal" class="close">✕</span>
+              </div>
+              <div id="languagesList"></div>
+              <div class="flex justify-end">
+                <button id="closeModalButton" class="py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition-colors">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
     </main>
+    
+    <section class="cta">
+        <h2>Start learning today!</h2>
+        <p>It’s easy to get started and fun to keep going. Join millions of people already learning!</p>
+        <button class="cta-btn">Join Now</button>
+    </section>
     
     <footer>
         <div class="footer-container">
-            <div class="footer-about">
-                <div class="footer-logo">
-                    <div class="logo-icon">L</div>
-                    <span class="logo-text">Duolingo</span>
-                </div>
-                <p>Making language learning fun and accessible for everyone, everywhere.</p>
+            <div class="footer-logo">
+                <div class="logo-icon">D</div>
+                <span class="logo-text">Duolingo</span>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Privacy</a></li>
+                </ul>
             </div>
             
             <div class="footer-links">
                 <h4>Learn</h4>
                 <ul>
-                    <li><a href="#">All Courses</a></li>
-                    <li><a href="#">Premium</a></li>
-                    <li><a href="#">Super Premium</a></li>
-                    <li><a href="#">For Schools</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-links">
-                <h4>About</h4>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Research</a></li>
+                    <li><a href="#">Languages</a></li>
+                    <li><a href="#">Tips & Tricks</a></li>
+                    <li><a href="#">Mobile App</a></li>
+                    <li><a href="#">Events</a></li>
                 </ul>
             </div>
             
             <div class="footer-links">
                 <h4>Help</h4>
                 <ul>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Support</a></li>
                     <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Terms</a></li>
                 </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <div class="social-icon">F</div>
+                    <div class="social-icon">T</div>
+                    <div class="social-icon">I</div>
+                </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <div>© 2025 Duolingo, Inc. All rights reserved.</div>
-            
-            <div class="social-links">
-                <div class="social-icon">F</div>
-                <div class="social-icon">T</div>
-                <div class="social-icon">I</div>
-                <div class="social-icon">Y</div>
-            </div>
+            <p>&copy; 2025 Duolingo. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        const regions = [
+      {
+        id: 'europe',
+        name: 'Europe',
+        position: { top: '30%', left: '48%' },
+        languages: [
+          { name: 'Spanish', speakers: '460 million', difficulty: 'Medium', flag: '🇪🇸', color: '#FF9500' },
+          { name: 'French', speakers: '275 million', difficulty: 'Medium', flag: '🇫🇷', color: '#1CB0F6' },
+          { name: 'German', speakers: '132 million', difficulty: 'Medium', flag: '🇩🇪', color: '#FF4B4B' },
+          { name: 'Italian', speakers: '68 million', difficulty: 'Easy', flag: '🇮🇹', color: '#89E219' },
+        ]
+      },
+      {
+        id: 'asia',
+        name: 'Asia',
+        position: { top: '40%', left: '70%' },
+        languages: [
+          { name: 'Japanese', speakers: '125 million', difficulty: 'Hard', flag: '🇯🇵', color: '#FF9500' },
+          { name: 'Mandarin Chinese', speakers: '1.1 billion', difficulty: 'Very Hard', flag: '🇨🇳', color: '#FF4B4B' },
+          { name: 'Korean', speakers: '75 million', difficulty: 'Hard', flag: '🇰🇷', color: '#1CB0F6' },
+          { name: 'Hindi', speakers: '600 million', difficulty: 'Medium', flag: '🇮🇳', color: '#89E219' },
+        ]
+      },
+      {
+        id: 'americas',
+        name: 'The Americas',
+        position: { top: '45%', left: '25%' },
+        languages: [
+          { name: 'Portuguese', speakers: '258 million', difficulty: 'Medium', flag: '🇧🇷', color: '#1CB0F6' },
+          { name: 'English', speakers: '1.5 billion', difficulty: 'Easy', flag: '🇺🇸', color: '#89E219' },
+          { name: 'Spanish', speakers: '460 million', difficulty: 'Medium', flag: '🇲🇽', color: '#FF9500' },
+          { name: 'Quechua', speakers: '8 million', difficulty: 'Hard', flag: '🇵🇪', color: '#FF4B4B' },
+        ]
+      },
+      {
+        id: 'africa',
+        name: 'Africa',
+        position: { top: '55%', left: '50%' },
+        languages: [
+          { name: 'Swahili', speakers: '100 million', difficulty: 'Medium', flag: '🇹🇿', color: '#1CB0F6' },
+          { name: 'Arabic', speakers: '422 million', difficulty: 'Hard', flag: '🇪🇬', color: '#FF4B4B' },
+          { name: 'Amharic', speakers: '25 million', difficulty: 'Hard', flag: '🇪🇹', color: '#FF9500' },
+          { name: 'Yoruba', speakers: '45 million', difficulty: 'Medium', flag: '🇳🇬', color: '#89E219' },
+        ]
+      },
+      {
+        id: 'oceania',
+        name: 'Oceania',
+        position: { top: '65%', left: '80%' },
+        languages: [
+          { name: 'Indonesian', speakers: '199 million', difficulty: 'Medium', flag: '🇮🇩', color: '#1CB0F6' },
+          { name: 'Maori', speakers: '157,000', difficulty: 'Hard', flag: '🇳🇿', color: '#FF4B4B' },
+          { name: 'Hawaiian', speakers: '24,000', difficulty: 'Medium', flag: '🏝️', color: '#FF9500' },
+          { name: 'Tagalog', speakers: '23 million', difficulty: 'Medium', flag: '🇵🇭', color: '#89E219' },
+        ]
+      }
+    ];
+
+    // Function to render region hotspots
+    function renderRegions() {
+      const regionContainer = document.getElementById('regions');
+      regions.forEach(region => {
+        const regionElement = document.createElement('div');
+        regionElement.classList.add('region');
+        regionElement.style.top = region.position.top;
+        regionElement.style.left = region.position.left;
+        regionElement.innerText = region.name;
+        regionElement.addEventListener('click', () => openLanguageModal(region));
+        regionContainer.appendChild(regionElement);
+      });
+    }
+
+    // Function to open the modal and display languages
+    function openLanguageModal(region) {
+      const modal = document.getElementById('languageModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const languagesList = document.getElementById('languagesList');
+
+      modal.style.display = 'flex';
+      modalTitle.innerText = `Languages in ${region.name}`;
+
+      languagesList.innerHTML = '';
+      region.languages.forEach(language => {
+        const languageDiv = document.createElement('div');
+        languageDiv.classList.add('mb-4');
+        languageDiv.innerHTML = `
+          <div style="background-color: ${language.color}; height: 8px;"></div>
+          <h4 class="text-lg font-bold">${language.name} ${language.flag}</h4>
+          <p><strong>Speakers:</strong> ${language.speakers}</p>
+          <p><strong>Difficulty:</strong> ${language.difficulty}</p>
+          <button class="py-2 px-4 bg-green-500 text-white rounded-lg" onclick="startLearning('${language.name}')">Start Learning</button>
+        `;
+        languagesList.appendChild(languageDiv);
+      });
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      const modal = document.getElementById('languageModal');
+      modal.style.display = 'none';
+    }
+    function openRegion(region) {
+            const content = {
+                Europe: 'Explore languages from Europe including Spanish, French, German, and more.',
+                Asia: 'Discover languages from Asia like Mandarin, Japanese, Korean, and others.',
+                Africa: 'Learn African languages such as Swahili, Amharic, and more.',
+                Americas: 'Study languages spoken across the Americas, including Portuguese, English, and more.'
+            };
+            document.getElementById('modalContent').innerHTML = content[region];
+            document.getElementById('languageModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('languageModal').style.display = 'none';
+        }
+    // Function to start learning a language (simple alert for now)
+    function startLearning(language) {
+      alert(`Starting to learn ${language}!`);
+      closeModal();
+    }
+
+    // Event listener for closing the modal
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('closeModalButton').addEventListener('click', closeModal);
+
+    // Render regions on page load
+    renderRegions();
+        
+    </script>
 </body>
 </html>
